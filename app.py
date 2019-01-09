@@ -71,9 +71,11 @@ def show_scores():
     ] or country not in COUNTRIES:
         return jsonify({'status': 400, 'message': 'invalid_format'}), 400
 
-    scores = db.scores.find({
-        'country': country
-    }).sort('value', DESCENDING).skip(skip).limit(limit)
+    filter_ = {}
+    if country != '':
+        filter_['country'] = country
+    scores = db.scores.find(filter_).sort('value',
+                                            DESCENDING).skip(skip).limit(limit)
 
     for score in scores:
         score['_id'] = str(score['_id'])
