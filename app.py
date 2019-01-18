@@ -76,7 +76,7 @@ def show_scores():
         filter_['country'] = country
     scores = db.scores.find(filter_).sort('value',
                                             DESCENDING).skip(skip).limit(limit)
-
+    scores = list(scores)
     for score in scores:
         score['_id'] = str(score['_id'])
 
